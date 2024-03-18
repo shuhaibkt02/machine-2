@@ -4,11 +4,12 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.width,
-    required this.textTheme,
+    required this.textTheme, required this.controller,
   });
 
   final double width;
   final TextTheme textTheme;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,7 @@ class CustomTextFormField extends StatelessWidget {
                 width: width / 4,
                 height: 60,
                 child: TextFormField(
+                  controller: controller,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     hintText: 'Enter Mobile Number',

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:machine_video/data/repo/auth_repo.dart';
@@ -13,17 +12,30 @@ class AuthProvider extends ChangeNotifier {
 
   AuthRepository repository = AuthRepository();
 
-  void login(BuildContext context) async {
-    final phone = mobileController.text.trim();
-    await repository.loginUser(phone: phone);
-    log('message');
-    _isLogging.add(true);
-  }
+  // void login(BuildContext context) async {
+  //   final phone = mobileController.text.trim();
+  //   await repository.loginUser(phone: phone);
+  //   _isLogging.add(true);
 
-  @override
-  void dispose() {
-    _isLogging.close();
-    mobileController.dispose();
-    super.dispose();
-  }
+    
+  //     await Future.delayed(
+  //       const Duration(seconds: 1),
+  //       () {
+  //         Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) => const HomeScreen(),
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
+
+  // @override
+  // void dispose() {
+  //   isLogging = false;
+  //   mobileController.dispose();
+  //   super.dispose();
+  // }
 }

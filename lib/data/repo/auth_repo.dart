@@ -37,6 +37,7 @@ class AuthRepository implements AuthService {
         'country_code': '+91',
         'password': phone,
       });
+      
       Response response = await dio.post('$baseUri/otp_verified', data: formData);
       final responseData = response.data as Map<String, dynamic>;
       token = responseData['token'];
