@@ -8,7 +8,8 @@ class PostCard extends StatelessWidget {
   const PostCard({
     super.key,
     required this.width,
-    required this.textTheme, required this.post,
+    required this.textTheme,
+    required this.post,
   });
 
   final double width;
@@ -17,11 +18,9 @@ class PostCard extends StatelessWidget {
   final PostModel post;
   @override
   Widget build(BuildContext context) {
-    String videoUrl =
-        'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-
     final prov = Provider.of<VideoProvider>(context);
-    prov.intiVideo(context: context, videoUrl: videoUrl, thumbnail: '');
+    prov.intiVideo(
+        context: context, videoUrl: post.video, thumbnail: post.image);
     return Container(
       height: width / 0.9,
       // color: Colors.grey,
@@ -36,9 +35,9 @@ class PostCard extends StatelessWidget {
             child: Container(
               height: width / 1.5,
               color: Colors.red,
-              // child: CustomVideoPlayer(
-              //   customVideoPlayerController: prov.customVideoPlayerController,
-              // ),
+              child: CustomVideoPlayer(
+                customVideoPlayerController: prov.customVideoPlayerController,
+              ),
             ),
           ),
           Padding(

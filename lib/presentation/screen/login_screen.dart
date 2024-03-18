@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:machine_video/presentation/logic/auth/auth_bloc.dart';
-import 'package:machine_video/presentation/screen/add_post.dart';
 import 'package:machine_video/presentation/screen/home_screen.dart';
 import 'package:machine_video/presentation/widget/login/custom_button.dart';
 import 'package:machine_video/presentation/widget/login/custom_text_field.dart';
@@ -23,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AddPost(),
+                  builder: (context) => const HomeScreen(),
                 ),
               );
             }
@@ -48,17 +47,10 @@ class LoginScreen extends StatelessWidget {
                 CustomButton(
                   width: width,
                   onpress: () {
-                    // final phoneNumber = controller.text.trim();
-                    // context.read<AuthBloc>().add(
-                    //       Login(phoneNumber: phoneNumber),
-                    //     );
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
+                    final phoneNumber = controller.text.trim();
+                    context.read<AuthBloc>().add(
+                          Login(phoneNumber: phoneNumber),
+                        );
                   },
                 ),
               ],

@@ -12,6 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
 
       try {
+        // print(event.phoneNumber);
         await authRepository.loginUser(phone: event.phoneNumber);
         emit(Authenticated());
       } catch (e) {

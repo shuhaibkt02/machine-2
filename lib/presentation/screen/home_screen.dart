@@ -4,7 +4,6 @@ import 'package:machine_video/data/model/category_model.dart';
 import 'package:machine_video/presentation/logic/post/post_bloc.dart';
 import 'package:machine_video/presentation/widget/home/post_card.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
@@ -36,25 +35,34 @@ class HomeScreen extends StatelessWidget {
         child: BlocBuilder<PostBloc, PostState>(
           builder: (context, state) {
             if (state is PostInitial) {
-              print('state init');
-
               context.read<PostBloc>().add(FetchDatas());
+              return Column(
+                children: [
+                  _Category(
+                    width: width,
+                    textTheme: textTheme,
+                    categories: [],
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              );
             }
-            if (state is PostLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
+            if (state is PostError) {
+              return Center(
+                child: Text('error: ${state.errorMessage}'),
               );
             }
 
             if (state is PostLoaded) {
               final post = state.postData;
               print('state loaded');
+              // print(state.postData.first.categories.length);
               return Column(
                 children: [
                   _Category(
                     width: width,
                     textTheme: textTheme,
-                    categories: post.first.categories,
+                    categories: [],
                   ),
                   const SizedBox(height: 10),
                   ...List.generate(
@@ -68,15 +76,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               );
             }
-            return Column(
-              children: [
-                _Category(
-                  width: width,
-                  textTheme: textTheme,
-                  categories: [],
-                ),
-                const SizedBox(height: 10),
-              ],
+
+            return const Center(
+              child: CircularProgressIndicator(),
             );
           },
         ),

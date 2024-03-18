@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:machine_video/presentation/logic/post_provider.dart';
 import 'package:machine_video/utils/constant.dart';
+import 'package:provider/provider.dart';
 
 class TagList extends StatelessWidget {
   final TextTheme textTheme;
@@ -10,7 +12,8 @@ class TagList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> categoryList = ['Physics', 'Maths'];
+    final prov = Provider.of<PostProvider>(context);
+    final categoryList = prov.category;
 
     return Wrap(
       children: List.generate(
@@ -23,7 +26,7 @@ class TagList extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
             ),
             label: Text(
-              categoryList[index],
+              categoryList[index].title,
               style: textTheme.bodySmall?.copyWith(color: Colors.grey.shade400),
             ),
           ),

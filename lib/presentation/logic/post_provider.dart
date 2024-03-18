@@ -9,7 +9,6 @@ import 'package:machine_video/data/repo/post_repo.dart';
 
 class PostProvider extends ChangeNotifier {
   List<CategoryModel> category = [];
-  List<String> categoryList = ['Physics', 'Maths'];
   String videoPath = '';
   String thumnailPath = '';
   PostRepository postRepository = PostRepository();

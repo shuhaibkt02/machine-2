@@ -74,20 +74,16 @@ class PostRepository extends PostService {
       final response =
           await dio.get('$baseUri/home', options: Options(headers: headers));
 
-      if (response.statusCode == 200) {
-        final responseData = response.data as Map<String, dynamic>;
-        if (responseData.containsKey('results')) {
-          final postJsonList = responseData['results'] as List<dynamic>;
+      final responseData = response.data as Map<String, dynamic>;
+      if (responseData.containsKey('results')) {
+        final postJsonList = responseData['results'] as List<dynamic>;
 
-          final postData = postJsonList
-              .map((category) => PostModel.fromJson(category))
-              .toList();
-          return postData;
-        } else {
-          throw Exception('Error: Response does not contain a "category" key.');
-        }
+        final postData = postJsonList
+            .map((post) => PostModel.fromJson(post))
+            .toList();
+        return postData;
       } else {
-        throw Exception('Error: Unexpected status code ${response.statusCode}');
+        throw Exception('Error: Response does not contain a "category" key.');
       }
     } catch (e) {
       throw Exception('Error fetching :$e');

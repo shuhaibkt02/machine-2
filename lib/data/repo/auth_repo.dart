@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -34,14 +35,17 @@ class AuthRepository implements AuthService {
     try {
       FormData formData = FormData.fromMap({
         'country_code': '+91',
-        // 'phone': phone,
-        'phone': '8129466718',
+        'phone': phone,
+        // 'phone': '8129466718',
       });
 
       Response response =
           await dio.post('$baseUri/otp_verified', data: formData);
       final responseData = response.data as Map<String, dynamic>;
+
       token = responseData['token']['access'];
+      // print(token);
+
       await storeToken(token: token);
     } catch (error) {
       throw Exception('Error: $error');
