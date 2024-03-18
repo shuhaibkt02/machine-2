@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:machine_video/data/model/category_model.dart';
 
 @immutable
 class PostModel {
   final int id;
   final String description;
+  final List<CategoryModel> categories;
   final String image;
   final String video;
   final int likes;
@@ -19,6 +21,7 @@ class PostModel {
       required this.likes,
       required this.disLike,
       required this.createdAt,
+      required this.categories,
       required this.follow});
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
@@ -30,5 +33,8 @@ class PostModel {
         disLike: json["likes"][1] ?? '',
         createdAt: json["created_at"] ?? '',
         follow: json["follow"] ?? false,
+        categories: (json['category_dict'] as List)
+            .map((category) => CategoryModel.fromJson(category))
+            .toList(),
       );
 }

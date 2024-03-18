@@ -8,13 +8,13 @@ class PostCard extends StatelessWidget {
   const PostCard({
     super.key,
     required this.width,
-    required this.textTheme,
+    required this.textTheme, required this.post,
   });
 
   final double width;
   final TextTheme textTheme;
 
-  // final PostModel post;
+  final PostModel post;
   @override
   Widget build(BuildContext context) {
     String videoUrl =

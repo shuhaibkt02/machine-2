@@ -8,9 +8,22 @@ import 'package:provider/provider.dart';
 
 class AddPost extends StatelessWidget {
   const AddPost({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider(
+      create: (context) => PostProvider(),
+      child: const AddPostWrapper(),
+    );
+  }
+}
+
+class AddPostWrapper extends StatelessWidget {
+  const AddPostWrapper({super.key});
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<PostProvider>(context);
+    prov.init();
     final textTheme = Theme.of(context).textTheme;
     double width = MediaQuery.sizeOf(context).width;
     return Scaffold(

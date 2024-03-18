@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:machine_video/data/model/category_model.dart';
 import 'package:machine_video/data/model/post_model.dart';
@@ -15,7 +17,6 @@ class PostRepository extends PostService {
   @override
   Future<void> addPost({required PostModel postData}) async {
     try {
-
       FormData formData = FormData.fromMap({
         'id': postData.id,
         'desciption': postData.description,
@@ -41,6 +42,8 @@ class PostRepository extends PostService {
 
       final response = await dio.get('$baseUri/category_list',
           options: Options(headers: headers));
+
+      log('$token');
 
       if (response.statusCode == 200) {
         final responseData = response.data as Map<String, dynamic>;

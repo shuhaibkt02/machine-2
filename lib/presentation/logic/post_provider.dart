@@ -4,16 +4,19 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:machine_video/data/model/category_model.dart';
+import 'package:machine_video/data/repo/post_repo.dart';
 
 class PostProvider extends ChangeNotifier {
+  List<CategoryModel> category = [];
   List<String> categoryList = ['Physics', 'Maths'];
+  String videoPath = '';
+  String thumnailPath = '';
+  PostRepository postRepository = PostRepository();
 
-  final StreamController<String> _videoPathController = StreamController<String>();
-  Stream<String> get videoPathStream => _videoPathController.stream;
-
-  final StreamController<String> _thumbnailPathController =
-      StreamController<String>();
-  Stream<String> get thumbnailPathStream => _thumbnailPathController.stream;
+  void init() async {
+    category = await postRepository.fetchCategory();
+  }
 
   Future<void> videoPicker() async {
     FilePickerResult? result =
@@ -21,11 +24,12 @@ class PostProvider extends ChangeNotifier {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      _videoPathController.add(file.path);
+      videoPath = '$file';
       log('$file');
     } else {
       throw Exception('Empty video file');
     }
+    notifyListeners();
   }
 
   Future<void> thumbnailPicker() async {
@@ -34,17 +38,16 @@ class PostProvider extends ChangeNotifier {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      _thumbnailPathController.add(file.path);
+      // thumnailPath = '$file';
       log('$file');
     } else {
       throw Exception('Empty thumbnail');
     }
+    notifyListeners();
   }
 
   @override
   void dispose() {
-    _videoPathController.close();
-    _thumbnailPathController.close();
     super.dispose();
   }
 }

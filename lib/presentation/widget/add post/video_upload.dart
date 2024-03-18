@@ -34,31 +34,28 @@ class _ThumbnailPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<PostProvider>(context);
-    final thumbnail = prov.thumbnailPathStream;
+    final thumbnail = prov.thumnailPath;
 
-    return StreamBuilder<String>(
-      stream: thumbnail,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final path = snapshot.data!;
-          return Image.asset(path);
-        }
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.photo_size_select_actual_rounded,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(width: 25),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(thumbUpload, style: textTheme.bodySmall),
-            ),
-          ],
-        );
-      },
-    );
+    return (thumbnail.isNotEmpty)
+        ? SizedBox(
+            height: 60,
+            width: 60,
+            child: Image.asset(thumbnail),
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.photo_size_select_actual_rounded,
+                color: Colors.grey.shade400,
+              ),
+              const SizedBox(width: 25),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(thumbUpload, style: textTheme.bodySmall),
+              ),
+            ],
+          );
   }
 }
 
@@ -70,30 +67,23 @@ class _VideoPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<PostProvider>(context);
-    final videoPath = prov.videoPathStream;
+    final videoPath = prov.videoPath;
 
-    return StreamBuilder<String>(
-      stream: videoPath,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final path = snapshot.data!;
-          return Text(path);
-        }
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.photo_size_select_actual_rounded,
-              color: Colors.grey.shade400,
-            ),
-            const SizedBox(width: 25),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(thumbUpload, style: textTheme.bodySmall),
-            ),
-          ],
-        );
-      },
-    );
+    return (videoPath.isNotEmpty)
+        ? FittedBox(child: Text(videoPath))
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.photo_size_select_actual_rounded,
+                color: Colors.grey.shade400,
+              ),
+              const SizedBox(width: 25),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(thumbUpload, style: textTheme.bodySmall),
+              ),
+            ],
+          );
   }
 }

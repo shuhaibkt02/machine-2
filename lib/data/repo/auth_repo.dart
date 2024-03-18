@@ -30,17 +30,18 @@ class AuthRepository implements AuthService {
   }
 
   @override
-  Future<void> loginUser(
-      {required String phone}) async {
+  Future<void> loginUser({required String phone}) async {
     try {
       FormData formData = FormData.fromMap({
         'country_code': '+91',
-        'password': phone,
+        // 'phone': phone,
+        'phone': '8129466718',
       });
-      
-      Response response = await dio.post('$baseUri/otp_verified', data: formData);
+
+      Response response =
+          await dio.post('$baseUri/otp_verified', data: formData);
       final responseData = response.data as Map<String, dynamic>;
-      token = responseData['token'];
+      token = responseData['token']['access'];
       await storeToken(token: token);
     } catch (error) {
       throw Exception('Error: $error');

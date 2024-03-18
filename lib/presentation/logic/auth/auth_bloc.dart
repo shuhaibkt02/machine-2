@@ -8,11 +8,12 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;
   AuthBloc({required this.authRepository}) : super(AuthInitial()) {
-    on<Login>((event, emit) {
+    on<Login>((event, emit) async {
       emit(AuthLoading());
 
       try {
-        authRepository.loginUser(phone: event.phoneNumber);
+        await authRepository.loginUser(phone: event.phoneNumber);
+        emit(Authenticated());
       } catch (e) {
         emit(AuthError(errorMessage: '$e'));
       }
