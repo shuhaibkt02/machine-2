@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData themeData = ThemeData(
+  scaffoldBackgroundColor: const Color(0xFF171717),
   textTheme: TextTheme(
     bodySmall: TextStyle(fontSize: 12, color: Colors.grey.shade600),
     bodyMedium: TextStyle(
@@ -11,7 +12,7 @@ ThemeData themeData = ThemeData(
     bodyLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
   ),
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.red.shade600,
+    seedColor: redBorder,
     brightness: Brightness.dark,
   ),
   useMaterial3: true,

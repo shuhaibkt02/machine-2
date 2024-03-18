@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:machine_video/presentation/logic/auth_provider.dart';
+import 'package:machine_video/presentation/screen/home_screen.dart';
+import 'package:machine_video/presentation/widget/login/custom_button.dart';
+import 'package:machine_video/presentation/widget/login/custom_text_field.dart';
+import 'package:machine_video/presentation/widget/login/label_widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -6,67 +13,41 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     double width = MediaQuery.sizeOf(context).width;
+    final prov = Provider.of<AuthProvider>(context);
 
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: width / 8,
-          ),
-          Container(
-            height: width / 2,
-            color: Colors.grey,
-          ),
-          SizedBox(
-            height: width / 5,
-          ),
-          Container(
-            height: width / 4,
-            // color: Colors.grey,
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Colors.grey,
-                        )),
-                    width: 60,
-                    height: 55,
-                    child: const Center(child: Text('+91')),
+      body: SingleChildScrollView(
+        child: StreamBuilder<bool>(
+            stream: prov.isLogging,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
                   ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: SizedBox(
-                      width: width / 4,
-                      height: 60,
-                      child: TextFormField(
-                        keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(
-                          hintText: 'Enter Mobile Number',
-                          hintStyle: textTheme.bodySmall,
-                          border: const OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              width: 0.5,
-                              color: Colors.grey.shade700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                );
+              }
+
+              return Column(
+                children: [
+                  SizedBox(
+                    height: width / 8,
+                  ),
+                  LabelWidget(width: width, textTheme: textTheme),
+                  CustomTextFormField(width: width, textTheme: textTheme),
+                  SizedBox(
+                    height: width / 2.3,
+                  ),
+                  CustomButton(
+                    width: width,
+                    onpress: () {
+                      Provider.of<AuthProvider>(context).login(context);
+                    },
                   ),
                 ],
-              ),
-            ),
-          ),
-        ],
+              );
+            }),
       ),
     );
   }
