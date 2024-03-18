@@ -40,7 +40,7 @@ class AuthRepository implements AuthService {
       Response response = await dio.post('$baseUri/otp_verified', data: formData);
       final responseData = response.data as Map<String, dynamic>;
       token = responseData['token'];
-      await storeToken(token: token); // Store token for future requests
+      await storeToken(token: token);
     } catch (error) {
       throw Exception('Error: $error');
     }
